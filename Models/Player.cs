@@ -1,4 +1,4 @@
-using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Code1st.Models
 {
@@ -9,6 +9,7 @@ namespace Code1st.Models
         public string LastName { get; set; }
         public string Position { get; set; }
         public string TeamName { get; set; }
+        [ForeignKey("TeamName")]
         public Team Team { get; set; }
         
         public Player() {

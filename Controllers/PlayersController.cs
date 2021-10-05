@@ -22,7 +22,8 @@ namespace Code1st.Controllers
         // GET: Players
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Players.ToListAsync());
+            var applicationDbContext = _context.Players.Include(p => p.Team);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Players/Details/5
@@ -34,6 +35,7 @@ namespace Code1st.Controllers
             }
 
             var player = await _context.Players
+                .Include(p => p.Team)
                 .FirstOrDefaultAsync(m => m.PlayerId == id);
             if (player == null)
             {
@@ -46,6 +48,7 @@ namespace Code1st.Controllers
         // GET: Players/Create
         public IActionResult Create()
         {
+            ViewData["TeamName"] = new SelectList(_context.Teams, "TeamName", "TeamName");
             return View();
         }
 
@@ -62,6 +65,7 @@ namespace Code1st.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TeamName"] = new SelectList(_context.Teams, "TeamName", "TeamName", player.TeamName);
             return View(player);
         }
 
@@ -78,6 +82,7 @@ namespace Code1st.Controllers
             {
                 return NotFound();
             }
+            ViewData["TeamName"] = new SelectList(_context.Teams, "TeamName", "TeamName", player.TeamName);
             return View(player);
         }
 
@@ -113,6 +118,7 @@ namespace Code1st.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TeamName"] = new SelectList(_context.Teams, "TeamName", "TeamName", player.TeamName);
             return View(player);
         }
 
@@ -125,6 +131,7 @@ namespace Code1st.Controllers
             }
 
             var player = await _context.Players
+                .Include(p => p.Team)
                 .FirstOrDefaultAsync(m => m.PlayerId == id);
             if (player == null)
             {

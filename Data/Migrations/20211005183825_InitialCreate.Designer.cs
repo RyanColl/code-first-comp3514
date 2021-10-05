@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Code1st.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211005175605_M1")]
-    partial class M1
+    [Migration("20211005183825_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,12 +36,9 @@ namespace Code1st.Data.Migrations
                     b.Property<string>("TeamName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TeamName1")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("PlayerId");
 
-                    b.HasIndex("TeamName1");
+                    b.HasIndex("TeamName");
 
                     b.ToTable("Players");
                 });
@@ -259,7 +256,7 @@ namespace Code1st.Data.Migrations
                 {
                     b.HasOne("Code1st.Models.Team", "Team")
                         .WithMany("Players")
-                        .HasForeignKey("TeamName1");
+                        .HasForeignKey("TeamName");
 
                     b.Navigation("Team");
                 });
