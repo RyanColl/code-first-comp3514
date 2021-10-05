@@ -16,6 +16,28 @@ namespace Code1st.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.10");
 
+            modelBuilder.Entity("Code1st.Models.City", b =>
+                {
+                    b.Property<int>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CityName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Population")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ProvinceCode")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CityId");
+
+                    b.HasIndex("ProvinceCode");
+
+                    b.ToTable("Cities");
+                });
+
             modelBuilder.Entity("Code1st.Models.Player", b =>
                 {
                     b.Property<int>("PlayerId")
@@ -39,6 +61,19 @@ namespace Code1st.Data.Migrations
                     b.HasIndex("TeamName");
 
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("Code1st.Models.Province", b =>
+                {
+                    b.Property<string>("ProvinceCode")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProvinceName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ProvinceCode");
+
+                    b.ToTable("Provinces");
                 });
 
             modelBuilder.Entity("Code1st.Models.Team", b =>
@@ -250,6 +285,15 @@ namespace Code1st.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Code1st.Models.City", b =>
+                {
+                    b.HasOne("Code1st.Models.Province", "Province")
+                        .WithMany("Cities")
+                        .HasForeignKey("ProvinceCode");
+
+                    b.Navigation("Province");
+                });
+
             modelBuilder.Entity("Code1st.Models.Player", b =>
                 {
                     b.HasOne("Code1st.Models.Team", "Team")
@@ -308,6 +352,11 @@ namespace Code1st.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Code1st.Models.Province", b =>
+                {
+                    b.Navigation("Cities");
                 });
 
             modelBuilder.Entity("Code1st.Models.Team", b =>

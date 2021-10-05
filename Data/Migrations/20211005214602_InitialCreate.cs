@@ -47,6 +47,18 @@ namespace Code1st.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Provinces",
+                columns: table => new
+                {
+                    ProvinceCode = table.Column<string>(type: "TEXT", nullable: false),
+                    ProvinceName = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Provinces", x => x.ProvinceCode);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Teams",
                 columns: table => new
                 {
@@ -165,6 +177,27 @@ namespace Code1st.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Cities",
+                columns: table => new
+                {
+                    CityId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CityName = table.Column<string>(type: "TEXT", nullable: true),
+                    Population = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProvinceCode = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cities", x => x.CityId);
+                    table.ForeignKey(
+                        name: "FK_Cities_Provinces_ProvinceCode",
+                        column: x => x.ProvinceCode,
+                        principalTable: "Provinces",
+                        principalColumn: "ProvinceCode",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Players",
                 columns: table => new
                 {
@@ -224,6 +257,11 @@ namespace Code1st.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cities_ProvinceCode",
+                table: "Cities",
+                column: "ProvinceCode");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Players_TeamName",
                 table: "Players",
                 column: "TeamName");
@@ -247,6 +285,9 @@ namespace Code1st.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Cities");
+
+            migrationBuilder.DropTable(
                 name: "Players");
 
             migrationBuilder.DropTable(
@@ -254,6 +295,9 @@ namespace Code1st.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Provinces");
 
             migrationBuilder.DropTable(
                 name: "Teams");

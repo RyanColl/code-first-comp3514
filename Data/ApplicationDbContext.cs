@@ -18,6 +18,10 @@ namespace Code1st.Data
         
         public DbSet <Team> Teams { get; set; }
 
+        public DbSet <City> Cities { get; set; }
+
+        public DbSet <Province> Provinces { get; set; }
+
 
 
     }

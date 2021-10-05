@@ -35,6 +35,8 @@ namespace Code1st
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+
+        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +61,9 @@ namespace Code1st
             app.UseAuthentication();
             app.UseAuthorization();
 
-            SampleData.Initialize(app);
+
+
+            SampleData2.Initialize(app);
 
             app.UseEndpoints(endpoints =>
             {
