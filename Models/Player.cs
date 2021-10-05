@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
+
 namespace Code1st.Models
 {
     public class Player
