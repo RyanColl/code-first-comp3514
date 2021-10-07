@@ -36,12 +36,16 @@ namespace Code1st.Data
                 ProvinceName="British Columbia",
             },
             new Province() {
-                ProvinceCode="CA",
-                ProvinceName="British Columbia",
+                ProvinceCode="AB",
+                ProvinceName="Alberta",
             },
             new Province() {
                 ProvinceCode="ON",
-                ProvinceName="British Columbia",
+                ProvinceName="Ontario",
+            },
+            new Province() {
+                ProvinceCode="MB",
+                ProvinceName="Manitoba",
             },
         };
 
@@ -57,13 +61,38 @@ namespace Code1st.Data
             },
             new City {
                 CityName = "Abbotsford",
-                Population = 88,
+                Population = 8823342,
                 ProvinceCode = context.Provinces.Find("BC").ProvinceCode,
             },
             new City {
                 CityName = "Burnaby",
                 Population = 213213,
                 ProvinceCode = context.Provinces.Find("ON").ProvinceCode,
+            },
+            new City {
+                CityName = "ThunderBay",
+                Population = 10000,
+                ProvinceCode = context.Provinces.Find("ON").ProvinceCode,
+            },
+            new City {
+                CityName = "Winnipeg",
+                Population = 88,
+                ProvinceCode = context.Provinces.Find("MB").ProvinceCode,
+            },
+            new City {
+                CityName = "Churchill",
+                Population = 213213,
+                ProvinceCode = context.Provinces.Find("MB").ProvinceCode,
+            },
+            new City {
+                CityName = "Calgary",
+                Population = 213213,
+                ProvinceCode = context.Provinces.Find("AB").ProvinceCode,
+            },
+            new City {
+                CityName = "Cockrain",
+                Population = 21213,
+                ProvinceCode = context.Provinces.Find("AB").ProvinceCode,
             },
         };
 
