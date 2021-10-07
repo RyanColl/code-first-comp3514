@@ -59,18 +59,6 @@ namespace Code1st.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Teams",
-                columns: table => new
-                {
-                    TeamName = table.Column<string>(type: "TEXT", nullable: false),
-                    City = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Teams", x => x.TeamName);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -197,28 +185,6 @@ namespace Code1st.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Players",
-                columns: table => new
-                {
-                    PlayerId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: true),
-                    LastName = table.Column<string>(type: "TEXT", nullable: true),
-                    Position = table.Column<string>(type: "TEXT", nullable: true),
-                    TeamName = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Players", x => x.PlayerId);
-                    table.ForeignKey(
-                        name: "FK_Players_Teams_TeamName",
-                        column: x => x.TeamName,
-                        principalTable: "Teams",
-                        principalColumn: "TeamName",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -260,11 +226,6 @@ namespace Code1st.Data.Migrations
                 name: "IX_Cities_ProvinceCode",
                 table: "Cities",
                 column: "ProvinceCode");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Players_TeamName",
-                table: "Players",
-                column: "TeamName");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -288,9 +249,6 @@ namespace Code1st.Data.Migrations
                 name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "Players");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -298,9 +256,6 @@ namespace Code1st.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Provinces");
-
-            migrationBuilder.DropTable(
-                name: "Teams");
         }
     }
 }

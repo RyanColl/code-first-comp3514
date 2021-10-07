@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Code1st.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211005215653_InitialCreate")]
+    [Migration("20211007075742_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,31 +40,6 @@ namespace Code1st.Data.Migrations
                     b.ToTable("Cities");
                 });
 
-            modelBuilder.Entity("Code1st.Models.Player", b =>
-                {
-                    b.Property<int>("PlayerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Position")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TeamName")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("PlayerId");
-
-                    b.HasIndex("TeamName");
-
-                    b.ToTable("Players");
-                });
-
             modelBuilder.Entity("Code1st.Models.Province", b =>
                 {
                     b.Property<string>("ProvinceCode")
@@ -76,19 +51,6 @@ namespace Code1st.Data.Migrations
                     b.HasKey("ProvinceCode");
 
                     b.ToTable("Provinces");
-                });
-
-            modelBuilder.Entity("Code1st.Models.Team", b =>
-                {
-                    b.Property<string>("TeamName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("City")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("TeamName");
-
-                    b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -296,15 +258,6 @@ namespace Code1st.Data.Migrations
                     b.Navigation("Province");
                 });
 
-            modelBuilder.Entity("Code1st.Models.Player", b =>
-                {
-                    b.HasOne("Code1st.Models.Team", "Team")
-                        .WithMany("Players")
-                        .HasForeignKey("TeamName");
-
-                    b.Navigation("Team");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -359,11 +312,6 @@ namespace Code1st.Data.Migrations
             modelBuilder.Entity("Code1st.Models.Province", b =>
                 {
                     b.Navigation("Cities");
-                });
-
-            modelBuilder.Entity("Code1st.Models.Team", b =>
-                {
-                    b.Navigation("Players");
                 });
 #pragma warning restore 612, 618
         }

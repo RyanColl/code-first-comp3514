@@ -8,91 +8,96 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Code1st.Data
 {
 
-    public class SampleData {
-    public static void Initialize(IApplicationBuilder app) { 
-        using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope()) {
-        var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-        context.Database.EnsureCreated();
+ public class SampleData2 {
+  public static void Initialize(IApplicationBuilder app) { 
+    using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope()) {
+      var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+      context.Database.EnsureCreated();
 
-        // Look for any teams.
-        if (context.Teams.Any()) {
-            return;   // DB has already been seeded
-        }
+      // Look for any Provinces.
+      if (context.Provinces.Any()) {
+          return;   // DB has already been seeded
+      }
 
-        var teams = GetTeams().ToArray();
-        context.Teams.AddRange(teams);
-        context.SaveChanges();
+      var provinces = GetProvinces().ToArray();
+      context.Provinces.AddRange(provinces);
+      context.SaveChanges();
 
-        var players = GetPlayers(context).ToArray();
-        context.Players.AddRange(players);
-        context.SaveChanges();
-        }
+      var cities = Getcities(context).ToArray();
+      context.Cities.AddRange(cities);
+      context.SaveChanges();
+    }
+  }
+
+    public static List<Province> GetProvinces() {
+        List<Province> Provinces = new List<Province>() {
+            new Province() {
+                ProvinceCode="BC",
+                ProvinceName="British Columbia",
+            },
+            new Province() {
+                ProvinceCode="AB",
+                ProvinceName="Alberta",
+            },
+            new Province() {
+                ProvinceCode="ON",
+                ProvinceName="Ontario",
+            }
+        };
+
+        return Provinces;
     }
 
-        public static List<Team> GetTeams() {
-            List<Team> teams = new List<Team>() {
-                new Team() {
-                    TeamName="Lakers",
-                    City="Los Angeles",
-                },
-                new Team() {
-                    TeamName="Golden State Warriors",
-                    City="Oakland",
-                },
-                new Team() {
-                    TeamName="Rockets",
-                    City="Houston",
-                },
-                new Team() {
-                    TeamName="Thunder",
-                    City="Oklahoma City",
-                },
-                new Team() {
-                    TeamName="Pelicans",
-                    City="New Orleans",
-                },
-                new Team() {
-                    TeamName="Raptors",
-                    City="Toronto",
-                },
-                new Team() {
-                    TeamName="Celtics",
-                    City="Boston",
-                },
-            };
+    public static List<City> Getcities(ApplicationDbContext context) {
+        List<City> cities = new List<City>() {
+            new City {
+                CityName = "Vancouver",
+                Population = 1350000,
+                ProvinceCode = context.Provinces.Find("BC").ProvinceCode,
+            },
+            new City {
+                CityName = "Abbotsford",
+                Population = 456742,
+                ProvinceCode = context.Provinces.Find("BC").ProvinceCode,
+            },
+            new City {
+                CityName = "Burnaby",
+                Population = 635555,
+                ProvinceCode = context.Provinces.Find("BC").ProvinceCode,
+            },
+            new City {
+                CityName = "Toronto",
+                Population = 10000000,
+                ProvinceCode = context.Provinces.Find("ON").ProvinceCode,
+            },
+            new City {
+                CityName = "Mississagua",
+                Population = 30,
+                ProvinceCode = context.Provinces.Find("ON").ProvinceCode,
+            },
+            new City {
+                CityName = "Ottowa",
+                Population = 40,
+                ProvinceCode = context.Provinces.Find("ON").ProvinceCode,
+            },
+            new City {
+                CityName = "Calgary",
+                Population = 50,
+                ProvinceCode = context.Provinces.Find("AB").ProvinceCode,
+            },
+            new City {
+                CityName = "Medicine Hat",
+                Population = 60,
+                ProvinceCode = context.Provinces.Find("AB").ProvinceCode,
+            },
+            new City {
+                CityName = "Red Deer",
+                Population = 70,
+                ProvinceCode = context.Provinces.Find("AB").ProvinceCode,
+            },
+        };
 
-            return teams;
-        }
-
-        public static List<Player> GetPlayers(ApplicationDbContext context) {
-            List<Player> players = new List<Player>() {
-                new Player {
-                    FirstName = "LeBron",
-                    LastName = "James",
-                    TeamName = context.Teams.Find("Lakers").TeamName,
-                    Position = "Shooting Guard"
-                },
-                new Player {
-                    FirstName = "Kevin",
-                    LastName = "Durant",
-                    TeamName = context.Teams.Find("Golden State Warriors").TeamName,
-                    Position = "Power Forward"
-                },
-                new Player {
-                    FirstName = "Stephen",
-                    LastName = "Curry",
-                    TeamName = context.Teams.Find("Golden State Warriors").TeamName,
-                    Position = "Point Guard"
-                },
-                new Player {
-                    FirstName = "James",
-                    LastName = "Harden",
-                    TeamName = context.Teams.Find("Rockets").TeamName,
-                    Position = "Shooting Guard"
-                },
-            };
-
-            return players;
-        }
+        return cities;
     }
+}
 }
